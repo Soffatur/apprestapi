@@ -10,9 +10,20 @@ exports.index = function(req, res){
 exports.getMahasiswa = function(req, res){
     connection.query("SELECT * FROM mahasiswa", function(error, rows, fields){
         if(error){
-            connection.log(error);
+            console.log(error);
         }else{
             response.ok(rows, res);
         }
     });
+}
+
+exports.getMahasiswaID = function(req, res){
+    let id = req.params.id
+    connection.query(`SELECT * FROM mahasiswa WHERE id = ?`,[id], function(error, rows, fields){
+        if(error){
+            console.log(error)
+        }else{
+            response.ok(rows, res)
+        }
+    })
 }
