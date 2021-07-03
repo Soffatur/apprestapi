@@ -62,3 +62,25 @@ exports.putMahasiswa = function (req, res) {
         }
     })
 }
+
+// delete mahasiswa where id
+exports.deleteMahasiswa = function(req, res){
+    let id = req.params.id
+    connection.query("DELETE FROM mahasiswa WHERE id = ?", [id], function(error, rows, fields){
+        if(error){
+            console.log(error);
+        }else{
+            response.ok(`DELETE data where id ${id} successfull!`, res)
+        }
+    })
+}
+
+exports.getGroupMahasiswa = function(req, res){
+    connection.query("SELECT mahasiswa.id, mahasiswa.nim, mahasiswa.jurusan, matakuliah.matakuliah, matakuliah.sks FROM krs JOIN matakuliah JOIN mahasiswa WHERE krs.id_matakuliah = matakuliah.id AND krs.id_mahasiswa = mahasiswa.id", function(error, rows, fields){
+        if(error){
+            console.log(error);
+        }else{
+            response.groupMahasiswa(rows, res)
+        }
+    })
+}
